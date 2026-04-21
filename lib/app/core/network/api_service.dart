@@ -50,6 +50,7 @@ class ApiServices implements IApiService {
   }
 
   ///  Get Product list
+  @override
   Future<LoginModel> getProducts() async {
     return _handleRequest<LoginModel>(
       () => _dio.post(ApiEndpoint.productList),
