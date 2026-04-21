@@ -9,6 +9,8 @@ import 'package:reedsexpressllc_flutter/app/data/models/load_model.dart';
 import 'package:reedsexpressllc_flutter/gen/assets.gen.dart';
 
 import '../constants/enums.dart';
+import '../theme/app_colors.dart';
+import '../widgets/app_text_style.dart';
 
 class LoadItemLayout extends StatelessWidget {
   final LoadModel load;

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/widgets/shimmer_loading.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:reedsexpressllc_flutter/app/core/widgets/shimmer_loading.dart';
 import '../../../gen/assets.gen.dart';
 
 Widget cachedImageWidget({

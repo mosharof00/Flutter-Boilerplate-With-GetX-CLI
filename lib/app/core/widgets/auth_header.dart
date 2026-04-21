@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:reedsexpressllc_flutter/app/core/extensions/sizedbox_extension.dart';
-import 'package:reedsexpressllc_flutter/app/core/theme/app_colors.dart';
-import 'package:reedsexpressllc_flutter/app/core/widgets/app_text_style.dart';
-import 'package:reedsexpressllc_flutter/app/core/widgets/custom_icon_button.dart';
+
+import '../extensions/sizedbox_extension.dart';
+import '../theme/app_colors.dart';
+import 'app_text_style.dart';
+import 'custom_icon_button.dart';
 
 Widget authHeader({
   required String title,

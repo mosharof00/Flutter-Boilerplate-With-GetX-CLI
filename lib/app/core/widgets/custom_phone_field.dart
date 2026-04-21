@@ -59,7 +59,7 @@
 //                     // Dial code
 //                     AppTextStyle(
 //                       text:
-//                           '+${countryList[selectedCountryIndex.value].dialCode}',
+//                       '+${countryList[selectedCountryIndex.value].dialCode}',
 //                     ),
 //                     SizedBox(width: 5.w),
 //                     Icon(
@@ -80,6 +80,7 @@
 //             hintText: 'Enter number'.tr,
 //             keyboardType: TextInputType.number,
 //             validator: (value) {
+//
 //               if(skipRequired == true  && numberController.text.isEmpty){
 //                 ///  to skip required this field
 //                 return null;
@@ -89,9 +90,9 @@
 //               } else if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
 //                 return 'Please enter a valid phone number'.tr;
 //               } else if (value.length <
-//                       countryList[selectedCountryIndex.value]
-//                           .minLength!
-//                           .toInt() ||
+//                   countryList[selectedCountryIndex.value]
+//                       .minLength!
+//                       .toInt() ||
 //                   value.length >
 //                       countryList[selectedCountryIndex.value].maxLength!) {
 //                 return 'Number should be between ${countryList[selectedCountryIndex.value].minLength} and ${countryList[selectedCountryIndex.value].maxLength} digits'

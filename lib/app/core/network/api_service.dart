@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import '../../data/models/login_model.dart';
+import '../../data/models/auth_models/login_model.dart';
 import 'api_endpoints.dart';
 import 'api_exception.dart';
 import 'auth_interceptor.dart';
@@ -8,6 +8,9 @@ import 'auth_interceptor.dart';
 abstract class IApiService {
   ///  Login:
   Future<LoginModel> loginUser(String email, String password);
+
+  ///  Get Product list
+  Future<LoginModel> getProducts();
 }
 
 class ApiServices implements IApiService {
@@ -43,6 +46,15 @@ class ApiServices implements IApiService {
       () => _dio.post(ApiEndpoint.login, data: data),
       (dynamic data) => LoginModel.fromJson(data),
       'Login',
+    );
+  }
+
+  ///  Get Product list
+  Future<LoginModel> getProducts() async {
+    return _handleRequest<LoginModel>(
+      () => _dio.post(ApiEndpoint.productList),
+      (dynamic data) => LoginModel.fromJson(data),
+      'Get Product List',
     );
   }
 }
