@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/layouts/product_layout.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_colors.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/widgets/appbar_title.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -19,7 +20,12 @@ class ProductsView extends GetView<ProductsController> {
     }
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(title: const Text('ProductsView'), centerTitle: true),
+      appBar: AppBar(
+        backgroundColor: AppColors.background,
+        surfaceTintColor: AppColors.background,
+        title: appbarTitle(text: "Products"),
+        centerTitle: true,
+      ),
       body: GetBuilder<ProductsController>(
         id: 'refresh_product',
         builder: (controller) {

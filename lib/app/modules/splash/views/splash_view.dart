@@ -12,11 +12,9 @@ class SplashView extends GetView<SplashController> {
   const SplashView({super.key});
   @override
   Widget build(BuildContext context) {
-    if (!Get.isRegistered<SplashController>()) {
-      Get.put(SplashController());
-    }
+    Get.put(SplashController());
     return Scaffold(
-      backgroundColor: AppColors.primary,
+      backgroundColor: AppColors.white,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Center(

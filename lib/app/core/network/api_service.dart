@@ -55,7 +55,7 @@ class ApiServices implements IApiService {
   @override
   Future<ProductsModel> getProducts() async {
     return _handleRequest<ProductsModel>(
-      () => _dio.post(ApiEndpoint.productList),
+      () => _dio.get(ApiEndpoint.productList),
       (dynamic data) => ProductsModel.fromJson(data),
       'Get Product List',
     );
@@ -70,7 +70,7 @@ Future<T> _handleRequest<T>(
   try {
     debugPrint('Api Name: $apiName');
     final response = await request();
-    Log.w(response);
+    // Log.w(response);
     return mapper(response.data);
   } on DioException catch (e) {
     debugPrint('DioException in $apiName: $e');

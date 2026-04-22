@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/modules/home/controllers/home_controller.dart';
 import 'package:get/get.dart';
 
 import '../../modules/main_page/controllers/main_page_controller.dart';
@@ -109,6 +110,7 @@ class HelperUtils {
     if (!Get.isRegistered<MainPageController>()) {
       // Ensure MainPageController is permanent and not reinitialized
       Get.put(MainPageController(), permanent: true);
+      Get.put(HomeController(), permanent: true);
     }
     await Future.delayed(Duration(milliseconds: 400));
   }
