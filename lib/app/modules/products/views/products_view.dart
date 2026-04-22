@@ -23,7 +23,7 @@ class ProductsView extends GetView<ProductsController> {
       appBar: AppBar(
         backgroundColor: AppColors.background,
         surfaceTintColor: AppColors.background,
-        title: appbarTitle(text: "Products"),
+        title: AppBarTitle("Products"),
         centerTitle: true,
       ),
       body: GetBuilder<ProductsController>(

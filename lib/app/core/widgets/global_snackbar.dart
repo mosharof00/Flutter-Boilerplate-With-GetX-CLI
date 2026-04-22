@@ -1,37 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'app_text_style.dart';
+
+import '../extensions/text_style_extension.dart';
+import 'app_text.dart';
 
 SnackbarController globalSnackBar({
   required String title,
   required String message,
-  String? svgImagePath,
   int? durationInSeconds,
-  double? iconHeight,
   Color? titleColor,
   Color? backgroundColor,
   SnackPosition? snackPosition,
 }) {
+  final context = Get.context!;
+
   return Get.snackbar(
     '',
     '',
-    titleText: AppTextStyle(
-      text: title,
-      fontSize: 15.sp,
-      fontWeight: FontWeight.w600,
-      color: titleColor,
+    titleText: AppText(
+      title,
+      style: context.titleSmall.copyWith(
+        fontWeight: FontWeight.w600,
+        color: titleColor ?? Colors.white,
+      ),
       textAlign: TextAlign.center,
     ),
-    messageText: AppTextStyle(
-      text: message,
-      fontSize: 12.sp,
-      fontWeight: FontWeight.w400,
+    messageText: AppText(
+      message,
+      style: context.bodySmall.copyWith(color: Colors.white70),
       textAlign: TextAlign.center,
-
     ),
-    backgroundColor: backgroundColor ?? Colors.transparent,
-    duration: Duration(seconds: durationInSeconds ?? 1),
+    backgroundColor: backgroundColor ?? Colors.black87,
+    duration: Duration(seconds: durationInSeconds ?? 2),
     snackPosition: snackPosition ?? SnackPosition.TOP,
   );
 }

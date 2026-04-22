@@ -1,6 +1,5 @@
-// lib/app/core/widgets/load_item_widget.dart
-
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/widgets/app_text.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
@@ -8,8 +7,8 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import '../../data/models/products_model.dart';
 import '../extensions/get_currency_extension.dart';
 import '../extensions/sizedbox_extension.dart';
+import '../extensions/text_style_extension.dart';
 import '../theme/app_colors.dart';
-import '../widgets/app_text_style.dart';
 import '../widgets/cached_image_widget.dart';
 import '../widgets/get_image_url.dart';
 import '../widgets/view_rating_stars.dart';
@@ -87,11 +86,11 @@ class ProductLayout extends StatelessWidget {
                               bottomRight: Radius.circular(5.r),
                             ),
                           ),
-                          child: AppTextStyle(
-                            text: "${product.discountPercentage}%",
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
+                          child: AppText(
+                            "${product.discountPercentage}%",
+                            style: context.bodySmall.copyWith(
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
@@ -138,45 +137,41 @@ class ProductLayout extends StatelessWidget {
               padding: EdgeInsets.all(5.r),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
                 spacing: 5.h,
                 children: [
-                  AppTextStyleOverFlow(
-                    text: product.title ?? "N/A",
+                  // ✅ Clean — semantic name, theme-aware
+                  AppText(
+                    product.title ?? "N/A",
+                    style: context.bodySmall,
                     maxLines: 2,
-                    textAlign: TextAlign.start,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12.sp,
+                    overflow: TextOverflow.ellipsis,
                   ),
 
-                  ///  price
                   Row(
                     children: [
-                      AppTextStyle(
-                        text: finalPrice.getCurrency(),
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w500,
+                      AppText(
+                        finalPrice.getCurrency(),
+                        style: context.titleMedium.copyWith(
+                          color: AppColors.primary,
+                        ),
                         maxLines: 1,
-                        color: AppColors.primary,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       5.width,
-                      product.discountPercentage == null ||
-                              product.discountPercentage == 0
-                          ? SizedBox.shrink()
-                          : AppTextStyle(
-                              text: price.getCurrency(),
-                              fontSize: 11.sp,
-                              fontWeight: FontWeight.w500,
-                              decoration: TextDecoration.lineThrough,
-                              color: AppColors.grey410,
-                            ),
+                      if (product.discountPercentage != null &&
+                          product.discountPercentage != 0)
+                        AppText(
+                          price.getCurrency(),
+                          style: context.labelSmall.copyWith(
+                            color: AppColors.grey410,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
                     ],
                   ),
-                  product.rating == 0
-                      ? SizedBox.shrink()
-                      : ViewSingleRatingStar(
-                          rating: product.rating!.toDouble(),
-                        ),
+
+                  if ((product.rating ?? 0) > 0)
+                    ViewSingleRatingStar(rating: product.rating!.toDouble()),
                 ],
               ),
             ),

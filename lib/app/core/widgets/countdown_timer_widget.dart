@@ -1,13 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../extensions/sizedbox_extension.dart';
+import '../extensions/text_style_extension.dart';
 import '../theme/app_colors.dart';
-import '../theme/app_theme.dart';
-import 'app_text_style.dart';
+import 'app_text.dart';
 
 class CountdownTimerWidget extends StatefulWidget {
-  final DateTime expireDate;
   const CountdownTimerWidget({super.key, required this.expireDate});
+
+  final DateTime expireDate;
 
   @override
   State<CountdownTimerWidget> createState() => _CountdownTimerWidgetState();
@@ -26,23 +29,18 @@ class _CountdownTimerWidgetState extends State<CountdownTimerWidget> {
 
   void _calculateDuration() {
     final now = DateTime.now();
-    if (widget.expireDate.isAfter(now)) {
-      _duration = widget.expireDate.difference(now);
-    } else {
-      _duration = Duration.zero;
-    }
+    _duration = widget.expireDate.isAfter(now)
+        ? widget.expireDate.difference(now)
+        : Duration.zero;
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (mounted) {
-        setState(() {
-          _calculateDuration();
-          if (_duration.inSeconds <= 0) {
-            _timer.cancel();
-          }
-        });
-      }
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (!mounted) return;
+      setState(() {
+        _calculateDuration();
+        if (_duration.inSeconds <= 0) _timer.cancel();
+      });
     });
   }
 
@@ -54,32 +52,44 @@ class _CountdownTimerWidgetState extends State<CountdownTimerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (_duration.inSeconds <= 0) {
-      return const SizedBox.shrink();
-    }
+    if (_duration.inSeconds <= 0) return const SizedBox.shrink();
 
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String pad(int n) => n.toString().padLeft(2, '0');
     final days = _duration.inDays;
-    final hours = twoDigits(_duration.inHours.remainder(24));
-    final minutes = twoDigits(_duration.inMinutes.remainder(60));
-    final seconds = twoDigits(_duration.inSeconds.remainder(60));
+    final hours = pad(_duration.inHours.remainder(24));
+    final minutes = pad(_duration.inMinutes.remainder(60));
+    final seconds = pad(_duration.inSeconds.remainder(60));
 
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         if (days > 0) ...[
-          _buildTimeBox(days.toString(), "Days"),
-          _buildSeparator(),
+          _TimeBox(value: days.toString(), label: 'Days', context: context),
+          _Separator(context: context),
         ],
-        _buildTimeBox(hours, "Hrs"),
-        _buildSeparator(),
-        _buildTimeBox(minutes, "Min"),
-        _buildSeparator(),
-        _buildTimeBox(seconds, "Sec"),
+        _TimeBox(value: hours, label: 'Hrs', context: context),
+        _Separator(context: context),
+        _TimeBox(value: minutes, label: 'Min', context: context),
+        _Separator(context: context),
+        _TimeBox(value: seconds, label: 'Sec', context: context),
       ],
     );
   }
+}
 
-  Widget _buildTimeBox(String value, String label) {
+class _TimeBox extends StatelessWidget {
+  const _TimeBox({
+    required this.value,
+    required this.label,
+    required this.context,
+  });
+
+  final String value;
+  final String label;
+  final BuildContext context;
+
+  @override
+  Widget build(BuildContext ctx) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
       decoration: BoxDecoration(
@@ -87,36 +97,45 @@ class _CountdownTimerWidgetState extends State<CountdownTimerWidget> {
         borderRadius: BorderRadius.circular(4.r),
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          AppTextStyle(
-            text: value,
-            fontSize: 12.sp,
-            fontWeight: FontWeight.bold,
-            color: AppColors.primary,
+          AppText(
+            value,
+            style: context.labelSmall.copyWith(
+              fontWeight: FontWeight.bold,
+              color: AppColors.primary,
+            ),
           ),
           2.width,
-          AppTextStyle(
-            text: label,
-            fontSize: 8.sp,
-            color: Colors.grey,
+          AppText(
+            label,
+            style: context.labelSmall.copyWith(
+              fontSize: 8.sp,
+              color: Colors.grey,
+            ),
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _buildSeparator() {
+class _Separator extends StatelessWidget {
+  const _Separator({required this.context});
+
+  final BuildContext context;
+
+  @override
+  Widget build(BuildContext ctx) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 4.w),
-      child: const AppTextStyle(
-        text: ":",
-        fontWeight: FontWeight.bold,
-        color: AppColors.primary,
+      child: AppText(
+        ':',
+        style: context.labelSmall.copyWith(
+          fontWeight: FontWeight.bold,
+          color: AppColors.primary,
+        ),
       ),
     );
   }
-}
-
-extension on int {
-  Widget get width => SizedBox(width: toDouble().w);
 }

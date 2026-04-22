@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'app_text_style.dart';
+import '../extensions/text_style_extension.dart';
+import 'app_text.dart';
 
 void globalToast({
   required String message,
@@ -10,23 +11,26 @@ void globalToast({
   Color? backgroundColor,
   Color? textColor,
   int? durationInSeconds,
-  double? fontSize,
   double? borderRadius,
   EdgeInsets? margin,
   SnackPosition? position,
 }) {
+  final context = Get.context!;
+
   Get.rawSnackbar(
     messageText: Row(
       children: [
-        if (icon != null)
+        if (icon != null) ...[
           Icon(icon, color: textColor ?? Colors.white, size: 20.sp),
-        if (icon != null) SizedBox(width: 8.w),
+          SizedBox(width: 8.w),
+        ],
         Expanded(
-          child: AppTextStyle(
-            text: message,
-            color: textColor ?? Colors.white,
-            fontSize: fontSize ?? 12.sp,
-            fontWeight: FontWeight.w500,
+          child: AppText(
+            message,
+            style: context.bodySmall.copyWith(
+              color: textColor ?? Colors.white,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ],

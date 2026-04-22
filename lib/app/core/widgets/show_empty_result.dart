@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../gen/assets.gen.dart';
 import '../extensions/sizedbox_extension.dart';
-import 'app_text_style.dart';
+import '../extensions/text_style_extension.dart';
+import 'app_text.dart';
 import 'global_button.dart';
 
 class ShowEmptyResult extends StatelessWidget {
@@ -16,9 +17,9 @@ class ShowEmptyResult extends StatelessWidget {
     this.widget,
     this.refreshOnTap,
   });
+
   final double? height;
   final double? width;
-
   final String? title;
   final String? desc;
   final Widget? widget;
@@ -38,31 +39,29 @@ class ShowEmptyResult extends StatelessWidget {
               width: 100.w,
             ),
             20.height,
-            AppTextStyle(
-              text: title ?? 'No response found!',
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w500,
+            AppText(
+              title ?? 'No response found!',
+              style: context.titleSmall,
+              textAlign: TextAlign.center,
             ),
             5.height,
             if (desc != null)
-              AppTextStyle(
-                text: desc!,
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
+              AppText(
+                desc!,
+                style: context.bodyMedium.copyWith(color: Colors.grey),
                 textAlign: TextAlign.center,
               ),
             if (refreshOnTap != null)
               Padding(
                 padding: EdgeInsets.only(top: 10.h),
-                child: globalButton(
+                child: GlobalButton(
                   height: 35.h,
                   width: 150.w,
-                  onTap: refreshOnTap ?? () {},
+                  onTap: refreshOnTap!,
                   text: "Refresh",
                 ),
               ),
-            widget != null ? 30.height : 0.width,
-            widget ?? 0.width,
+            if (widget != null) ...[30.height, widget!],
           ],
         ),
       ),

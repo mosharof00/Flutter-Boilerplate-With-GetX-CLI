@@ -1,27 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../extensions/text_style_extension.dart';
 import '../theme/app_colors.dart';
-import 'app_text_style.dart';
+import 'app_text.dart';
+
+InputDecoration _buildInputDecoration({
+  required BuildContext context,
+  String? hintText,
+  String? errorText,
+  String? suffixText,
+  Widget? suffixIcon,
+}) {
+  return InputDecoration(
+    errorText: errorText,
+    suffixText: suffixText,
+    suffixIcon: suffixIcon,
+    suffixStyle: Theme.of(
+      context,
+    ).textTheme.bodyMedium?.copyWith(color: AppColors.hintText),
+    hintText: hintText?.tr ?? '',
+    filled: true,
+    fillColor: Colors.white,
+    hintStyle: Theme.of(
+      context,
+    ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: const BorderSide(color: Colors.black, width: 0.5),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: const BorderSide(color: AppColors.hintText, width: 0.5),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: const BorderSide(color: AppColors.primary, width: 0.8),
+    ),
+  );
+}
 
 class InputFieldWithLabel extends StatelessWidget {
-  final String label;
-  final Color? labelColor;
-  final String? hintText;
-  final TextInputType? keyboardType;
-  final int maxLines;
-  final TextEditingController? controller;
-  final String? Function(String?)? validator;
-  final void Function(String)? onChanged;
-  final String? errorText;
-  final bool? obscureText;
-  final Widget? suffixIcon;
-  final String? suffixText;
-  final bool readOnly;
-  final VoidCallback? onTap;
-
   const InputFieldWithLabel({
     super.key,
     required this.label,
@@ -40,6 +60,21 @@ class InputFieldWithLabel extends StatelessWidget {
     this.onTap,
   });
 
+  final String label;
+  final Color? labelColor;
+  final String? hintText;
+  final TextInputType? keyboardType;
+  final int maxLines;
+  final String? suffixText;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final void Function(String)? onChanged;
+  final String? errorText;
+  final bool? obscureText;
+  final Widget? suffixIcon;
+  final bool readOnly;
+  final VoidCallback? onTap;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -47,21 +82,18 @@ class InputFieldWithLabel extends StatelessWidget {
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            AppTextStyle(
-              text: label,
-              fontSize: 14.sp,
-              color: Colors.black,
-              fontWeight: FontWeight.w500, // Medium
+            AppText(
+              label,
+              style: context.titleSmall.copyWith(
+                color: labelColor ?? Colors.black,
+              ),
             ),
-            validator == null
-                ? SizedBox.shrink()
-                : AppTextStyle(
-                    text: "*",
-                    fontSize: 15.sp,
-                    color: Colors.red.shade800,
-                  ),
+            if (validator != null)
+              AppText(
+                '*',
+                style: context.titleSmall.copyWith(color: Colors.red.shade800),
+              ),
           ],
         ),
         TextFormField(
@@ -72,58 +104,16 @@ class InputFieldWithLabel extends StatelessWidget {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           keyboardType: keyboardType ?? TextInputType.text,
           maxLines: maxLines,
-          style: GoogleFonts.poppins(
-            textStyle: TextStyle(
-              color: Colors.black,
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w400, // Regular
-            ),
-          ),
+          style: Theme.of(context).textTheme.bodyMedium,
           onChanged: onChanged,
           validator: validator,
           obscureText: obscureText ?? false,
-          decoration: InputDecoration(
+          decoration: _buildInputDecoration(
+            context: context,
+            hintText: hintText,
             errorText: errorText,
             suffixText: suffixText,
             suffixIcon: suffixIcon,
-            suffixStyle: GoogleFonts.poppins(
-              textStyle: TextStyle(
-                color: AppColors.hintText,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w400, // Regular
-              ),
-            ),
-            hintText: hintText?.tr ?? '',
-            filled: true,
-            fillColor: Colors.white,
-            hintStyle: GoogleFonts.poppins(
-              textStyle: TextStyle(
-                color: Colors.grey,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(
-                color: Colors.black,
-                width: 0.5,
-              ), // Thinner
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(
-                color: AppColors.hintText,
-                width: 0.5,
-              ), // Thinner
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(
-                color: AppColors.primary,
-                width: 0.8,
-              ), // Thinner
-            ),
           ),
         ),
       ],
@@ -132,22 +122,22 @@ class InputFieldWithLabel extends StatelessWidget {
 }
 
 class PasswordInputField extends StatefulWidget {
-  final String label;
-  final String? hintText;
-  final TextEditingController? controller;
-  final String? Function(String?)? validator;
-  final void Function(String)? onChanged;
-  final String? errorText;
-
   const PasswordInputField({
     super.key,
-    this.label = "Password",
+    this.label = 'Password',
     this.hintText,
     this.controller,
     this.validator,
     this.onChanged,
     this.errorText,
   });
+
+  final String label;
+  final String? hintText;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final void Function(String)? onChanged;
+  final String? errorText;
 
   @override
   State<PasswordInputField> createState() => _PasswordInputFieldState();
@@ -164,19 +154,15 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppTextStyle(
-              text: widget.label,
-              fontSize: 14.sp,
-              color: Colors.black,
-              fontWeight: FontWeight.w500, // Medium (was w300)
+            AppText(
+              widget.label,
+              style: context.titleSmall.copyWith(color: Colors.black),
             ),
-            widget.validator == null
-                ? const SizedBox.shrink()
-                : AppTextStyle(
-                    text: "*",
-                    fontSize: 15.sp,
-                    color: Colors.red.shade800,
-                  ),
+            if (widget.validator != null)
+              AppText(
+                '*',
+                style: context.titleSmall.copyWith(color: Colors.red.shade800),
+              ),
           ],
         ),
         TextFormField(
@@ -185,16 +171,12 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           keyboardType: TextInputType.visiblePassword,
           obscureText: _obscure,
-          style: GoogleFonts.poppins(
-            textStyle: TextStyle(
-              color: Colors.black,
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w400, // Regular
-            ),
-          ),
+          style: Theme.of(context).textTheme.bodyMedium,
           onChanged: widget.onChanged,
           validator: widget.validator,
-          decoration: InputDecoration(
+          decoration: _buildInputDecoration(
+            context: context,
+            hintText: widget.hintText ?? 'Enter password',
             errorText: widget.errorText,
             suffixIcon: IconButton(
               onPressed: () => setState(() => _obscure = !_obscure),
@@ -205,37 +187,6 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
                 color: AppColors.hintText,
                 size: 20.sp,
               ),
-            ),
-            hintText: widget.hintText?.tr ?? 'Enter password',
-            filled: true,
-            fillColor: Colors.white,
-            hintStyle: GoogleFonts.poppins(
-              textStyle: TextStyle(
-                color: Colors.grey,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(
-                color: Colors.black,
-                width: 0.5,
-              ), // Thinner
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(
-                color: AppColors.hintText,
-                width: 0.5,
-              ), // Thinner
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(
-                color: AppColors.primary,
-                width: 0.8,
-              ), // Thinner
             ),
           ),
         ),

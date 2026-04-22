@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../theme/app_colors.dart';
-import 'app_text_style.dart';
+import '../extensions/text_style_extension.dart';
+import 'app_text.dart';
 
 class BadgeIcon extends StatelessWidget {
   const BadgeIcon({
@@ -23,8 +24,7 @@ class BadgeIcon extends StatelessWidget {
 
     return InkWell(
       onTap: onTap,
-      child:
-      hasBadge
+      child: hasBadge
           ? badges.Badge(
         position: badges.BadgePosition.topEnd(top: -12, end: -10),
         badgeStyle: badges.BadgeStyle(
@@ -32,10 +32,10 @@ class BadgeIcon extends StatelessWidget {
           padding: EdgeInsets.all(5.r),
           borderSide: BorderSide(color: Colors.white, width: 1.5.r),
         ),
-        badgeContent: AppTextStyle(
-          text: count,
-          fontSize: 10.sp,
-          color: Colors.white,
+        badgeContent: AppText(
+          count,
+          // ✅ labelSmall fits badge content semantically
+          style: context.labelSmall.copyWith(color: Colors.white),
         ),
         badgeAnimation: const badges.BadgeAnimation.slide(
           animationDuration: Duration(seconds: 2),

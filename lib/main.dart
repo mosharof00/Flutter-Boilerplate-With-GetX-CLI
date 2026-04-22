@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import 'app/core/config/app_config.dart';
 import 'app/core/services/local_store_service.dart';
+import 'app/core/theme/app_theme.dart';
 import 'app/routes/app_pages.dart';
 
 void main() async {
@@ -32,7 +33,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -44,14 +45,13 @@ class MyApp extends StatelessWidget {
         title: AppConfig.appName,
         debugShowCheckedModeBanner: false,
 
-        ///  Routing Initialization
+        // ✅ Add these — was completely missing
+        theme: AppTheme.light(),
+        darkTheme: AppTheme.dark(),
+        themeMode: ThemeMode.system,
+
         initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
-
-        // ///  Language Initialization
-        // translations: Languages(),
-        // locale: HelperUtils.locateLanguage(),
-        // fallbackLocale: HelperUtils.locateLanguage(),
       ),
     );
   }

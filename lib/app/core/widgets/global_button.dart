@@ -2,55 +2,76 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../theme/app_colors.dart';
-import 'app_text_style.dart';
 
-Widget globalButton(
-    {required VoidCallback onTap,
-    required String text,
-    Color? color,
-    Color? shadowColor,
-    Color? borderColor,
-    Color? textColor,
-    double? height,
-    double? blurRadius,
-    double? width,
-    double? fontSize,
-    FontWeight? fontWeight,
-    BorderRadius? borderRadius,
-    LinearGradient? gradient,
-    List<BoxShadow>? boxShadow,
-    Widget? suffixWidget,
-    Widget? prefixWidget,
-    EdgeInsetsGeometry? padding}) {
-  return CupertinoButton(
-    onPressed: onTap,
-    padding: padding ?? EdgeInsets.zero,
-    child: Container(
+import '../extensions/text_style_extension.dart';
+import '../theme/app_colors.dart';
+import 'app_text.dart';
+
+class GlobalButton extends StatelessWidget {
+  const GlobalButton({
+    super.key,
+    required this.onTap,
+    required this.text,
+    this.color,
+    this.borderColor,
+    this.textColor,
+    this.height,
+    this.width,
+    this.borderRadius,
+    this.gradient,
+    this.boxShadow,
+    this.suffixWidget,
+    this.prefixWidget,
+    this.padding,
+  });
+
+  final VoidCallback onTap;
+  final String text;
+  final Color? color;
+  final Color? borderColor;
+  final Color? textColor;
+  final double? height;
+  final double? width;
+  final BorderRadius? borderRadius;
+  final LinearGradient? gradient;
+  final List<BoxShadow>? boxShadow;
+  final Widget? suffixWidget;
+  final Widget? prefixWidget;
+  final EdgeInsetsGeometry? padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoButton(
+      onPressed: onTap,
+      padding: padding ?? EdgeInsets.zero,
+      child: Container(
         height: height ?? 45.h,
         width: width ?? Get.width,
         decoration: BoxDecoration(
-            color: color ?? AppColors.primary,
-            gradient: gradient,
-            borderRadius: borderRadius ?? BorderRadius.circular(12.r),
-            border: Border.all(color: borderColor ?? Colors.transparent),
-            boxShadow: boxShadow),
+          color: gradient == null ? (color ?? AppColors.primary) : null,
+          gradient: gradient,
+          borderRadius: borderRadius ?? BorderRadius.circular(12.r),
+          border: Border.all(color: borderColor ?? Colors.transparent),
+          boxShadow: boxShadow,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            prefixWidget ?? SizedBox.shrink(),
+            if (prefixWidget != null) prefixWidget!,
             Expanded(
-              child: AppTextStyle(
-                text: text,
-                color: textColor ?? Colors.white,
-                fontSize: fontSize ?? 15.sp,
-                fontWeight: fontWeight ?? FontWeight.w500,
+              child: AppText(
+                text,
+                style: context.titleSmall.copyWith(
+                  color: textColor ?? Colors.white,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),
-            suffixWidget ?? SizedBox.shrink(),
+            if (suffixWidget != null) suffixWidget!,
           ],
-        )),
-  );
+        ),
+      ),
+    );
+  }
 }

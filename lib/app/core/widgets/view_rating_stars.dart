@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_colors.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../extensions/sizedbox_extension.dart';
-import 'app_text_style.dart';
+import '../extensions/text_style_extension.dart';
+import '../theme/app_colors.dart';
+import 'app_text.dart';
 
 class ViewRatingStars extends StatelessWidget {
-  const ViewRatingStars({super.key, required this.rating});
+  const ViewRatingStars({
+    super.key,
+    required this.rating,
+  });
+
   final double rating;
 
   @override
@@ -15,21 +20,17 @@ class ViewRatingStars extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Static Star Rating
         RatingBarIndicator(
           rating: rating,
-          itemBuilder:
-              (context, index) => const Icon(Icons.star, color: Colors.orange),
+          itemBuilder: (context, _) =>
+          const Icon(Icons.star, color: Colors.orange),
           itemCount: 5,
           itemSize: 20.sp,
-          direction: Axis.horizontal,
         ),
         4.width,
-        // Display Rating Value
-        Text(
+        AppText(
           '(${rating.toStringAsFixed(1)})',
-          style: TextStyle(
-            fontSize: 14,
+          style: context.bodyMedium.copyWith(
             color: Colors.grey[700],
             fontWeight: FontWeight.bold,
           ),
@@ -48,6 +49,7 @@ class ViewSingleRatingStar extends StatelessWidget {
     this.iconSize,
     this.fontWeight,
   });
+
   final double rating;
   final Color? textColor;
   final double? fontSize;
@@ -57,15 +59,18 @@ class ViewSingleRatingStar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Icon(Icons.star, color: AppColors.amber, size: iconSize ?? 14.sp),
         2.width,
-        AppTextStyle(
-          text: rating.toString(),
-          fontSize: fontSize ?? 11.sp,
-          fontWeight: fontWeight ?? FontWeight.w500,
-          color: textColor,
+        AppText(
+          rating.toString(),
+          style: context.labelSmall.copyWith(
+            color: textColor,
+            fontWeight: fontWeight ?? FontWeight.w500,
+            // ✅ fontSize override only when explicitly needed
+            fontSize: fontSize,
+          ),
         ),
       ],
     );
