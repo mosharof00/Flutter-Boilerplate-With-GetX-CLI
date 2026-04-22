@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate_with_getx_cli/app/core/layouts/product_layout.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_colors.dart';
-import 'package:flutter_boilerplate_with_getx_cli/app/core/widgets/appbar_title.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'package:get/get.dart';
 
-import '../../../core/widgets/global_loading.dart';
-import '../../../core/widgets/show_empty_result.dart';
+import '../../../layouts/product_layout.dart';
+import '../../../widgets/appbar_title.dart';
+import '../../../widgets/global_loading.dart';
+import '../../../widgets/show_empty_result.dart';
 import '../controllers/products_controller.dart';
 
 class ProductsView extends GetView<ProductsController> {

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/sizedbox_extension.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/text_style_extension.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_colors.dart';
-import 'package:flutter_boilerplate_with_getx_cli/app/core/widgets/app_text.dart';
-import 'package:flutter_boilerplate_with_getx_cli/app/core/widgets/appbar_title.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
 import '../../../../gen/assets.gen.dart';
+import '../../../widgets/app_text.dart';
+import '../../../widgets/appbar_title.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate_with_getx_cli/app/core/widgets/app_text.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 
-import '../../data/models/products_model.dart';
-import '../extensions/get_currency_extension.dart';
-import '../extensions/sizedbox_extension.dart';
-import '../extensions/text_style_extension.dart';
-import '../theme/app_colors.dart';
+import '../core/extensions/get_currency_extension.dart';
+import '../core/extensions/sizedbox_extension.dart';
+import '../core/extensions/text_style_extension.dart';
+import '../core/theme/app_colors.dart';
+import '../data/models/products_model.dart';
+import '../widgets/app_text.dart';
 import '../widgets/cached_image_widget.dart';
 import '../widgets/get_image_url.dart';
 import '../widgets/view_rating_stars.dart';
+
 
 class ProductLayout extends StatelessWidget {
   const ProductLayout({
@@ -139,7 +140,6 @@ class ProductLayout extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 5.h,
                 children: [
-                  // ✅ Clean — semantic name, theme-aware
                   AppText(
                     product.title ?? "N/A",
                     style: context.bodySmall,

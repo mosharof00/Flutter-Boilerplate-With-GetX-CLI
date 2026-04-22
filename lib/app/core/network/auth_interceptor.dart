@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
 import '../../routes/app_pages.dart';
+import '../../widgets/global_snackbar.dart';
 import '../utils/helper_utils.dart';
-import '../widgets/global_snackbar.dart';
 
 class AuthInterceptor extends Interceptor {
   final Dio dio;

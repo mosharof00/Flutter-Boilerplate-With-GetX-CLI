@@ -1,6 +1,6 @@
 import 'package:url_launcher/url_launcher.dart';
 
-import '../widgets/global_snackbar.dart';
+import '../../widgets/global_snackbar.dart';
 
 class UrlLauncher {
   static Future<void> url(String? url) async {

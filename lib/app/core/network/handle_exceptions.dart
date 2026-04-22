@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import '../../widgets/global_snackbar.dart';
 import '../utils/logger.dart';
-import '../widgets/global_snackbar.dart';
 import 'api_exception.dart';
 
 void handleException(dynamic error) {
