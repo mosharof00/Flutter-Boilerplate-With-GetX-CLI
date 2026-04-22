@@ -39,30 +39,28 @@ class ShowEmptyResult extends StatelessWidget {
             ),
             20.height,
             AppTextStyle(
-              text: title ?? 'No restaurant found!',
+              text: title ?? 'No response found!',
               fontSize: 16.sp,
               fontWeight: FontWeight.w500,
             ),
             5.height,
-            AppTextStyle(
-              text:
-                  desc ??
-                  'No restaurants found nearby your location. Try exploring a wider area or check again later!',
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              textAlign: TextAlign.center,
-            ),
-            refreshOnTap != null
-                ? Padding(
-                    padding: EdgeInsets.only(top: 10.h),
-                    child: globalButton(
-                      height: 35.h,
-                      width: 150.w,
-                      onTap: refreshOnTap ?? () {},
-                      text: "Refresh",
-                    ),
-                  )
-                : 0.height,
+            if (desc != null)
+              AppTextStyle(
+                text: desc!,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                textAlign: TextAlign.center,
+              ),
+            if (refreshOnTap != null)
+              Padding(
+                padding: EdgeInsets.only(top: 10.h),
+                child: globalButton(
+                  height: 35.h,
+                  width: 150.w,
+                  onTap: refreshOnTap ?? () {},
+                  text: "Refresh",
+                ),
+              ),
             widget != null ? 30.height : 0.width,
             widget ?? 0.width,
           ],

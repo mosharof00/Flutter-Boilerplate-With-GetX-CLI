@@ -12,4 +12,5 @@ class AppColors {
   static const Color amber = Color(0xFFFFBF00);
   static const Color hintText = Color(0xFF818898);
   static const Color white = Color(0xFFFFFFFF);
+  static const Color grey410 = Color(0xFF979797);
 }

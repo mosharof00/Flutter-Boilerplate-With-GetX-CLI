@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/utils/logger.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/data/models/products_model.dart';
 import '../../data/models/auth_models/login_model.dart';
 import 'api_endpoints.dart';
 import 'api_exception.dart';
@@ -10,7 +12,7 @@ abstract class IApiService {
   Future<LoginModel> loginUser(String email, String password);
 
   ///  Get Product list
-  Future<LoginModel> getProducts();
+  Future<ProductsModel> getProducts();
 }
 
 class ApiServices implements IApiService {
@@ -51,10 +53,10 @@ class ApiServices implements IApiService {
 
   ///  Get Product list
   @override
-  Future<LoginModel> getProducts() async {
-    return _handleRequest<LoginModel>(
+  Future<ProductsModel> getProducts() async {
+    return _handleRequest<ProductsModel>(
       () => _dio.post(ApiEndpoint.productList),
-      (dynamic data) => LoginModel.fromJson(data),
+      (dynamic data) => ProductsModel.fromJson(data),
       'Get Product List',
     );
   }
@@ -68,13 +70,14 @@ Future<T> _handleRequest<T>(
   try {
     debugPrint('Api Name: $apiName');
     final response = await request();
-    // Log.w(response);
+    Log.w(response);
     return mapper(response.data);
   } on DioException catch (e) {
     debugPrint('DioException in $apiName: $e');
     throw ApiException.fromDio(e);
   } catch (e, stacktrace) {
     debugPrint('Unexpected error in $apiName: $e\n$stacktrace');
+    Log.e('Error $apiName : ${e.toString()}');
     throw ApiException('Unexpected error: $e');
   }
 }

@@ -1,6 +1,5 @@
+import 'package:flutter_boilerplate_with_getx_cli/app/core/utils/logger.dart';
 import 'package:image_picker/image_picker.dart';
-
-import 'package:reedsexpressllc_flutter/app/core/utils/logger.dart';
 
 class ImagePickerHelper {
   static Future<XFile?> pickSingleFile(

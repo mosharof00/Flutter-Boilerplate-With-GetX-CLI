@@ -1,15 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
+import 'app/core/config/app_config.dart';
+import 'app/core/services/local_store_service.dart';
 import 'app/routes/app_pages.dart';
 
-void main() {
-  runApp(
-    GetMaterialApp(
-      title: "Application",
-      initialRoute: AppPages.INITIAL,
-      getPages: AppPages.routes,
-    ),
-  );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  /// Initialize Firebase FIRST
+  // await Firebase.initializeApp(
+  //   name: 'meeza',
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+  //
+  ///    Initialize Supabase
+  // await Supabase.initialize(
+  //   url: AppConfig.SUPABASE_URL,
+  //   anonKey: AppConfig.SUPABASE_ANON_KEY,
+  // );
+
+  await HiveService.initHive();
+
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, child) => GetMaterialApp(
+        textDirection: TextDirection.ltr,
+        title: AppConfig.appName,
+        debugShowCheckedModeBanner: false,
+
+        ///  Routing Initialization
+        initialRoute: AppPages.INITIAL,
+        getPages: AppPages.routes,
+
+        // ///  Language Initialization
+        // translations: Languages(),
+        // locale: HelperUtils.locateLanguage(),
+        // fallbackLocale: HelperUtils.locateLanguage(),
+      ),
+    );
+  }
 }
