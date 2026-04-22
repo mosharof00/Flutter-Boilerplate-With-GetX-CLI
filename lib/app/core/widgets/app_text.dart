@@ -1,23 +1,21 @@
-// ✅ STEP 4: Only create a wrapper widget when you need BOTH
-//            localization AND consistent overflow behavior together
-// lib/core/widgets/app_text.dart
-
-import 'package:flutter/cupertino.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AppText extends StatelessWidget {
   const AppText(
     this.text, {
-    required this.style,
+    this.style,
     this.maxLines,
-    this.overflow = TextOverflow.ellipsis, // sensible default
+    this.overflow = TextOverflow.ellipsis,
     this.textAlign,
     this.softWrap,
     super.key,
   });
 
   final String text;
-  final TextStyle style;
+  final TextStyle? style;
   final int? maxLines;
   final TextOverflow overflow;
   final TextAlign? textAlign;
@@ -27,7 +25,7 @@ class AppText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text.tr,
-      style: style,
+      style: style ?? Theme.of(context).textTheme.bodyMedium,
       maxLines: maxLines,
       overflow: maxLines != null ? overflow : null,
       textAlign: textAlign,

@@ -12,6 +12,16 @@ class HiveService {
     searchHistory = await Hive.openBox('searchHistory');
   }
 
+  ///    App Theme Controller
+  static T? read<T>(String key) {
+    return box?.get(key) as T?;
+  }
+
+  static void write(String key, dynamic value) {
+    box?.put(key, value);
+  }
+
+
   // /// User ID
   // static setUserID(int id) {
   //   box.put('id', id);
@@ -117,4 +127,9 @@ class HiveService {
   static void clearSearchHistory() {
     searchHistory?.delete('history');
   }
+
+
 }
+
+
+
