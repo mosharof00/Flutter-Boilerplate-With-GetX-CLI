@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'app/core/config/app_config.dart';
+import 'app/core/network/api_service.dart';
 import 'app/core/services/local_store_service.dart';
 import 'app/core/theme/app_theme.dart';
 import 'app/routes/app_pages.dart';
@@ -27,6 +28,9 @@ void main() async {
   await HiveService.initHive();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  ///   Inject Api ApiServices at once
+  Get.put<IApiService>(ApiServices());
 
   runApp(const MyApp());
 }

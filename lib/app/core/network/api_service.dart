@@ -37,6 +37,27 @@ class ApiServices implements IApiService {
     // );
   }
 
+  ///   Handle Request
+  Future<T> _handleRequest<T>(
+    Future<Response> Function() request,
+    T Function(dynamic data) mapper,
+    String apiName,
+  ) async {
+    try {
+      debugPrint('Api Name: $apiName');
+      final response = await request();
+      // Log.w(response);
+      return mapper(response.data);
+    } on DioException catch (e) {
+      debugPrint('DioException in $apiName: $e');
+      throw ApiException.fromDio(e);
+    } catch (e, stacktrace) {
+      debugPrint('Unexpected error in $apiName: $e\n$stacktrace');
+      Log.e('Error $apiName : ${e.toString()}');
+      throw ApiException('Unexpected error: $e');
+    }
+  }
+
   ///           Auth            ///
 
   ///  Login:
@@ -59,25 +80,5 @@ class ApiServices implements IApiService {
       (dynamic data) => ProductsModel.fromJson(data),
       'Get Product List',
     );
-  }
-}
-
-Future<T> _handleRequest<T>(
-  Future<Response> Function() request,
-  T Function(dynamic data) mapper,
-  String apiName,
-) async {
-  try {
-    debugPrint('Api Name: $apiName');
-    final response = await request();
-    // Log.w(response);
-    return mapper(response.data);
-  } on DioException catch (e) {
-    debugPrint('DioException in $apiName: $e');
-    throw ApiException.fromDio(e);
-  } catch (e, stacktrace) {
-    debugPrint('Unexpected error in $apiName: $e\n$stacktrace');
-    Log.e('Error $apiName : ${e.toString()}');
-    throw ApiException('Unexpected error: $e');
   }
 }

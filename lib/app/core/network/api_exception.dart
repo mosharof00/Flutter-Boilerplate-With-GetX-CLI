@@ -19,14 +19,18 @@ class ApiException implements Exception {
       } else if (data is String) {
         message = data;
       }
-      return ApiException(
-        message,
-        statusCode: e.response?.statusCode,
-      );
+      return ApiException(message, statusCode: e.response?.statusCode);
     }
 
     if (e.type == DioExceptionType.unknown) {
       return ApiException("No Internet connection");
+    }
+    if (e.type == DioExceptionType.receiveTimeout ||
+        e.type == DioExceptionType.sendTimeout) {
+      return ApiException("Request timed out");
+    }
+    if (e.type == DioExceptionType.cancel) {
+      return ApiException("Request was cancelled");
     }
 
     return ApiException("Something went wrong");

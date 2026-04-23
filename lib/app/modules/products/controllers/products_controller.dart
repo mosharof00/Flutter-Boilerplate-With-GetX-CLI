@@ -3,11 +3,10 @@ import 'package:flutter_boilerplate_with_getx_cli/app/data/models/products_model
 import 'package:get/get.dart';
 
 import '../../../core/network/handle_exceptions.dart';
-import '../../../core/utils/logger.dart';
 
 class ProductsController extends GetxController {
   //TODO: Implement ProductsController
-  final ApiServices _apiService = ApiServices();
+  final IApiService _apiService = Get.find<IApiService>();
 
   final menuWithRestaurantList = <Product>[].obs;
   bool isInit = false;
