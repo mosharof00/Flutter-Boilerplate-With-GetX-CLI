@@ -1,4 +1,3 @@
-import 'package:flutter_boilerplate_with_getx_cli/app/core/network/api_client.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/data/models/products_model.dart';
 import 'package:get/get.dart';
 

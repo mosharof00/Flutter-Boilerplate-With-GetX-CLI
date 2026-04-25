@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'app/core/config/app_config.dart';
-import 'app/core/network/api_client.dart';
 import 'app/core/services/local_store_service.dart';
 import 'app/core/theme/app_theme.dart';
 import 'app/data/repositories/app_repository_binding.dart';
