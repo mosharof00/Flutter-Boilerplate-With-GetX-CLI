@@ -15,9 +15,6 @@ class ProductsView extends GetView<ProductsController> {
   const ProductsView({super.key});
   @override
   Widget build(BuildContext context) {
-    if (!Get.isRegistered<ProductsController>()) {
-      Get.put(ProductsController());
-    }
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -31,7 +28,7 @@ class ProductsView extends GetView<ProductsController> {
         builder: (controller) {
           if (controller.isInit) {
             return GlobalLoading();
-          } else if (controller.menuWithRestaurantList.isEmpty) {
+          } else if (controller.productList.isEmpty) {
             return ShowEmptyResult(
               title: "No product found!",
               desc: "Please try again letter",
@@ -67,15 +64,15 @@ class ProductsView extends GetView<ProductsController> {
                     mainAxisSpacing: 20.h,
                     crossAxisSpacing: 20.w,
                     itemCount:
-                        controller.menuWithRestaurantList.length +
+                        controller.productList.length +
                         (controller.isLoading.value ? 1 : 0),
                     itemBuilder: (context, index) {
-                      if (index == controller.menuWithRestaurantList.length &&
+                      if (index == controller.productList.length &&
                           controller.isLoading.value) {
                         return GlobalLoading();
                       } else {
                         return ProductLayout(
-                          product: controller.menuWithRestaurantList[index],
+                          product: controller.productList[index],
                         );
                       }
                     },

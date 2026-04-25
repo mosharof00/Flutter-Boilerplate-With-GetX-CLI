@@ -1,15 +1,16 @@
-import 'package:flutter_boilerplate_with_getx_cli/app/core/network/api_service.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/network/api_client.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/data/models/products_model.dart';
 import 'package:get/get.dart';
 
 import '../../../core/network/handle_exceptions.dart';
+import '../../../data/repositories/product_repository.dart';
 
 class ProductsController extends GetxController {
   //TODO: Implement ProductsController
-  final IApiService _apiService = Get.find<IApiService>();
+  final IProductRepository _productRepository = Get.find<IProductRepository>();
 
-  final menuWithRestaurantList = <Product>[].obs;
-  bool isInit = false;
+  final productList = <Product>[].obs;
+  bool isInit = true;
   final isLoading = false.obs;
   bool isEndPage = false;
   int pagination = 10;
@@ -25,15 +26,15 @@ class ProductsController extends GetxController {
       }
       isLoading.value = true;
 
-      final response = await _apiService.getProducts(
+      final response = await _productRepository.getProducts(
         // pagination: pagination,
         // page: currentPage.value,
       );
 
       if (currentPage.value == 0) {
-        menuWithRestaurantList.value = response.products!;
+        productList.value = response.products!;
       } else {
-        menuWithRestaurantList.addAll(response.products!);
+        productList.addAll(response.products!);
       }
       currentPage.value++;
       if (response.products!.isEmpty) {

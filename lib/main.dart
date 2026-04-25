@@ -5,9 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'app/core/config/app_config.dart';
-import 'app/core/network/api_service.dart';
+import 'app/core/network/api_client.dart';
 import 'app/core/services/local_store_service.dart';
 import 'app/core/theme/app_theme.dart';
+import 'app/data/repositories/app_repository_binding.dart';
 import 'app/routes/app_pages.dart';
 
 void main() async {
@@ -29,9 +30,6 @@ void main() async {
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  ///   Inject Api ApiServices at once
-  Get.put<IApiService>(ApiServices());
-
   runApp(const MyApp());
 }
 
@@ -49,13 +47,16 @@ class MyApp extends StatelessWidget {
         title: AppConfig.appName,
         debugShowCheckedModeBanner: false,
 
-        // ✅ Add these — was completely missing
+        // Add these — was completely missing
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),
         themeMode: ThemeMode.system,
 
         initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
+
+        // init all repository bindings
+        initialBinding: AppRepositoryBinding(),
       ),
     );
   }
