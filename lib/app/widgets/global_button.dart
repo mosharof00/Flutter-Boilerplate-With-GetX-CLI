@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 import '../core/extensions/text_style_extension.dart';
 import '../core/theme/app_colors.dart';
@@ -23,6 +22,7 @@ class GlobalButton extends StatelessWidget {
     this.suffixWidget,
     this.prefixWidget,
     this.padding,
+    this.isDisabled = false,
   });
 
   final VoidCallback onTap;
@@ -38,27 +38,33 @@ class GlobalButton extends StatelessWidget {
   final Widget? suffixWidget;
   final Widget? prefixWidget;
   final EdgeInsetsGeometry? padding;
+  final bool isDisabled;
+
+  Color _resolveColor() {
+    if (isDisabled) return AppColors.primaryDisable;
+    return color ?? AppColors.primary;
+  }
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
-      onPressed: onTap,
+      onPressed: isDisabled ? null : onTap,
       padding: padding ?? EdgeInsets.zero,
       child: Container(
         height: height ?? 45.h,
-        width: width ?? Get.width,
+        width: width ?? double.infinity,
         decoration: BoxDecoration(
-          color: gradient == null ? (color ?? AppColors.primary) : null,
-          gradient: gradient,
+          color: gradient == null ? _resolveColor() : null,
+          gradient: isDisabled ? null : gradient,
           borderRadius: borderRadius ?? BorderRadius.circular(12.r),
           border: Border.all(color: borderColor ?? Colors.transparent),
-          boxShadow: boxShadow,
+          boxShadow: isDisabled ? null : boxShadow,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (prefixWidget != null) prefixWidget!,
+            ?prefixWidget,
             Expanded(
               child: AppText(
                 text,
