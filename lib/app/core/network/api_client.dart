@@ -34,6 +34,7 @@ class ApiClient {
     try {
       Log.i('[$apiName] Request started');
       final response = await request();
+      Log.d(response);
       return mapper(response.data);
     } on DioException catch (e) {
       Log.e('[$apiName] DioException: $e');
