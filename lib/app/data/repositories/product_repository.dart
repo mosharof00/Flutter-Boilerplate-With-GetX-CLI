@@ -14,14 +14,11 @@ class ProductRepository implements IProductRepository {
   @override
   Future<ProductsModel> getProducts({required int limit, required int skip}) {
     return _client.handleRequest(
-          () => _client.dio.get(
+      () => _client.dio.get(
         ApiEndpoint.productList,
-        queryParameters: {
-          'limit': limit,
-          'skip': skip,
-        },
+        queryParameters: {'limit': limit, 'skip': skip},
       ),
-          (dynamic data) => ProductsModel.fromJson(data),
+      (dynamic data) => ProductsModel.fromJson(data),
       'Get Products',
     );
   }

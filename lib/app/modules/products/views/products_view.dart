@@ -16,35 +16,30 @@ class ProductsView extends GetView<ProductsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Products')),
-      body: GetBuilder<ProductsController>(
-        id: 'refresh',
-        builder: (controller) {
-          return Obx(
-                () => PaginatedGridView(
-              scrollController: controller.scrollController,
-              itemCount: controller.productList.length,
-              isFetching: controller.isFetching,
-              isLoadingMore: controller.isLoadingMore.value,
-              isEmpty: controller.productList.isEmpty,
-              onRefresh: () => controller.fetchData(),
-              gridType: PaginatedGridType.masonry,
-              crossAxisCount: 2,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
-              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-              fetchingWidget: GlobalLoading(),
-              loadMoreWidget: GlobalLoading(),
-              emptyWidget: ShowEmptyResult(
-                title: 'No products found!',
-                desc: 'Please try again later',
-                refreshOnTap: () => controller.fetchData(),
-              ),
-              itemBuilder: (context, index) => ProductLayout(
-                product: controller.productList[index],
-              ),
-            ),
-          );
-        },
+      body:  Obx(
+            () => PaginatedGridView(
+          scrollController: controller.scrollController,
+          itemCount: controller.productList.length,
+          isFetching: controller.isFetching.value,
+          isLoadingMore: controller.isLoadingMore.value,
+          isEmpty: controller.productList.isEmpty,
+          onRefresh: () => controller.fetchData(),
+          gridType: PaginatedGridType.masonry,
+          crossAxisCount: 2,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+          fetchingWidget: GlobalLoading(),
+          loadMoreWidget: GlobalLoading(),
+          emptyWidget: ShowEmptyResult(
+            title: 'No products found!',
+            desc: 'Please try again later',
+            refreshOnTap: () => controller.fetchData(),
+          ),
+          itemBuilder: (context, index) => ProductLayout(
+            product: controller.productList[index],
+          ),
+        ),
       ),
     );
   }

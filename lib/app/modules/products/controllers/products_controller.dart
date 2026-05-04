@@ -4,32 +4,30 @@ import 'package:get/get.dart';
 
 import '../../../core/network/handle_exceptions.dart';
 import '../../../data/repositories/product_repository.dart';
-import '../../../widgets/fetch_mixins.dart';
 
 class ProductsController extends GetxController {
   final IProductRepository _repo = Get.find<IProductRepository>();
 
   final productList = <Product>[].obs;
-  bool isFetching = true;
+  final isFetching = false.obs;
   final isLoadingMore = false.obs;
   bool isEndPage = false;
-  int pagination = 10;
+  final int pagination = 10;
   final currentPage = 0.obs;
   final scrollController = ScrollController();
 
   Future<void> fetchData({bool isRefresh = true}) async {
     if (isLoadingMore.value) return;
 
-    try {
-      if (isRefresh) {
-        currentPage.value = 0;
-        isEndPage = false;
-        isFetching = true;
-        update(['refresh']);
-      }
-
+    if (isRefresh) {
+      currentPage.value = 0;
+      isEndPage = false;
+      isFetching.value = true;
+    } else {
       isLoadingMore.value = true;
+    }
 
+    try {
       final response = await _repo.getProducts(
         limit: pagination,
         skip: currentPage.value * pagination,
@@ -48,11 +46,8 @@ class ProductsController extends GetxController {
     } catch (e) {
       handleException(e);
     } finally {
+      isFetching.value = false;
       isLoadingMore.value = false;
-      if (isFetching) {
-        isFetching = false;
-        update(['refresh']);
-      }
     }
   }
 
@@ -60,7 +55,9 @@ class ProductsController extends GetxController {
     if (scrollController.position.pixels >=
             scrollController.position.maxScrollExtent - 200 &&
         !isEndPage &&
-        !isLoadingMore.value) {
+        !isLoadingMore.value &&
+        !isFetching.value) {
+      // ← add this guard
       fetchData(isRefresh: false);
     }
   }
@@ -68,6 +65,7 @@ class ProductsController extends GetxController {
   @override
   void onInit() {
     scrollController.addListener(onScrollListener);
+    fetchData(isRefresh: true);
     super.onInit();
   }
 
