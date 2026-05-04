@@ -16,7 +16,7 @@ class ProductsView extends GetView<ProductsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Products')),
-      body:  Obx(
+      body: Obx(
             () => PaginatedGridView(
           scrollController: controller.scrollController,
           itemCount: controller.productList.length,
