@@ -266,25 +266,6 @@ class PaginatedListView extends StatelessWidget {
   Widget _buildList() {
     final totalCount = itemCount + (isLoadingMore ? 1 : 0);
 
-    if (separatorBuilder != null) {
-      return ListView.separated(
-        controller: scrollController,
-        padding: padding,
-        physics: physics ?? const AlwaysScrollableScrollPhysics(),
-        shrinkWrap: shrinkWrap,
-        scrollDirection: scrollDirection,
-        itemCount: totalCount,
-        separatorBuilder: (context, index) {
-          // No separator before the load-more indicator
-          if (index == itemCount - 1 && isLoadingMore) {
-            return const SizedBox.shrink();
-          }
-          return separatorBuilder!(context, index);
-        },
-        itemBuilder: _itemBuilder,
-      );
-    }
-
     return ListView.builder(
       controller: scrollController,
       padding: padding,
@@ -293,7 +274,20 @@ class PaginatedListView extends StatelessWidget {
       scrollDirection: scrollDirection,
       itemExtent: itemExtent,
       itemCount: totalCount,
-      itemBuilder: _itemBuilder,
+      itemBuilder: (context, index) {
+        final item = _itemBuilder(context, index);
+
+        // If we have a separator and this is NOT the last item in the total list
+        if (separatorBuilder != null && index < totalCount - 1) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [item, separatorBuilder!(context, index)],
+          );
+        }
+
+        return item;
+      },
     );
   }
 

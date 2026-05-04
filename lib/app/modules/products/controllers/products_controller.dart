@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/data/models/products_model.dart';
-import 'package:flutter_boilerplate_with_getx_cli/app/widgets/fetch_mixins.dart';
 import 'package:get/get.dart';
 
 import '../../../core/network/handle_exceptions.dart';
