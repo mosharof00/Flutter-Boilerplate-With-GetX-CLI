@@ -9,7 +9,7 @@ import '../core/extensions/text_style_extension.dart';
 import '../core/theme/app_colors.dart';
 import '../data/models/products_model.dart';
 import '../widgets/app_text.dart';
-import '../widgets/cached_image_widget.dart';
+import '../widgets/cached_image.dart';
 import '../widgets/get_image_url.dart';
 import '../widgets/view_rating_stars.dart';
 
@@ -65,7 +65,7 @@ class ProductLayout extends StatelessWidget {
                     topLeft: Radius.circular(15.r),
                     topRight: Radius.circular(15.r),
                   ),
-                  child: cachedImageWidget(
+                  child: CachedImage(
                     imgUrl: GetImageUrl.url(product.thumbnail ?? ''),
                     height: imgHeight ?? 130.h,
                     width: imgWidth ?? Get.width,

@@ -3,7 +3,7 @@ import 'package:flutter_boilerplate_with_getx_cli/app/core/network/api_endpoints
 import 'package:flutter_boilerplate_with_getx_cli/app/data/models/products_model.dart';
 
 abstract class IProductRepository {
-  Future<ProductsModel> getProducts();
+  Future<ProductsModel> getProducts({required int limit, required int skip});
 }
 
 class ProductRepository implements IProductRepository {
@@ -12,10 +12,13 @@ class ProductRepository implements IProductRepository {
   ProductRepository(this._client);
 
   @override
-  Future<ProductsModel> getProducts() {
+  Future<ProductsModel> getProducts({required int limit, required int skip}) {
     return _client.handleRequest(
-          () => _client.dio.get(ApiEndpoint.productList),
-          (dynamic data) => ProductsModel.fromJson(data),
+      () => _client.dio.get(
+        ApiEndpoint.productList,
+        queryParameters: {'limit': limit, 'skip': skip},
+      ),
+      (dynamic data) => ProductsModel.fromJson(data),
       'Get Products',
     );
   }

@@ -1,65 +1,110 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/data/models/products_model.dart';
 import 'package:get/get.dart';
 
 import '../../../core/network/handle_exceptions.dart';
 import '../../../data/repositories/product_repository.dart';
 
+///   Using PaginatedFetchMixin
+// class ProductsController extends GetxController with PaginatedFetchMixin {
+//   final IProductRepository _repo = Get.find<IProductRepository>();
+//
+//   final productList = <Product>[].obs;
+//
+//   @override
+//   Future<void> fetchPage(int page) async {
+//     final response = await _repo.getProducts(
+//       limit: pagination,
+//       skip: page * pagination,
+//     );
+//
+//     final products = response.products ?? [];
+//
+//     if (page == pageBase) {
+//       productList.value = products;
+//     } else {
+//       productList.addAll(products);
+//     }
+//
+//     if (products.length < pagination) isEndPage = true;
+//   }
+//
+//   @override
+//   void onFetchError(dynamic e) => handleException(e);
+// }
+
 class ProductsController extends GetxController {
-  //TODO: Implement ProductsController
-  final IProductRepository _productRepository = Get.find<IProductRepository>();
+  final IProductRepository _repo = Get.find<IProductRepository>();
 
   final productList = <Product>[].obs;
-  bool isInit = true;
-  final isLoading = false.obs;
+
+  final isFetching = false.obs;
+  final isLoadingMore = false.obs;
   bool isEndPage = false;
-  int pagination = 10;
-  final currentPage = 0.obs;
+  bool _isInitialFetch = true;
+  final int pagination = 10;
+  int currentPage = 0;
+  final scrollController = ScrollController();
 
-  Future<void> fetchProducts({bool isRefresh = true}) async {
-    try {
-      if (isRefresh == true) {
-        currentPage.value = 0;
-        isEndPage = false;
-        isInit = true;
-        update(['refresh_product']);
+  Future<void> fetchData({bool isRefresh = true}) async {
+    if (isLoadingMore.value) return;
+
+    if (isRefresh) {
+      currentPage = 0;
+      isEndPage = false;
+      if (_isInitialFetch) {
+        isFetching.value = true;
       }
-      isLoading.value = true;
+    } else {
+      isLoadingMore.value = true;
+    }
 
-      final response = await _productRepository.getProducts(
-        // pagination: pagination,
-        // page: currentPage.value,
+    try {
+      final response = await _repo.getProducts(
+        limit: pagination,
+        skip: currentPage * pagination,
       );
 
-      if (currentPage.value == 0) {
-        productList.value = response.products!;
+      final products = response.products ?? [];
+
+      if (currentPage == 0) {
+        productList.value = products;
       } else {
-        productList.addAll(response.products!);
-      }
-      currentPage.value++;
-      if (response.products!.isEmpty) {
-        isEndPage = true;
+        productList.addAll(products);
       }
 
-      if (isInit == true) {
-        isInit = false;
-        update(['refresh_product']);
-      }
+      if (products.length < pagination) isEndPage = true;
+      currentPage++;
     } catch (e) {
       handleException(e);
-      if (isInit == true) {
-        isInit = false;
-        update(['refresh_product']);
-      }
     } finally {
-      isLoading.value = false;
+      isFetching.value = false;
+      isLoadingMore.value = false;
+      _isInitialFetch = false;
+    }
+  }
+
+  void onScrollListener() {
+    if (scrollController.position.pixels >=
+            scrollController.position.maxScrollExtent - 200 &&
+        !isEndPage &&
+        !isLoadingMore.value &&
+        !isFetching.value) {
+      fetchData(isRefresh: false);
     }
   }
 
   @override
   void onInit() {
-    // TODO: implement onInit
-
-    fetchProducts();
+    scrollController.addListener(onScrollListener);
+    fetchData();
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    scrollController.removeListener(onScrollListener);
+    scrollController.dispose();
+    super.onClose();
   }
 }
