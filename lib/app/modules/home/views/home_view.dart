@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/config/app_config.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/sizedbox_extension.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/text_style_extension.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_colors.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
-import '../../../../gen/assets.gen.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -20,7 +20,7 @@ class HomeView extends GetView<HomeController> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(child: Assets.logos.appLogo.image(width: 200.w,)),
+          Center(child: Image.asset(AppConfig.appLogo, width: 200.w,)),
 
           20.height,
           AppText(
