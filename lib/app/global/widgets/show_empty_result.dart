@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/sizedbox_extension.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/text_style_extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../gen/assets.gen.dart';
-import '../core/extensions/sizedbox_extension.dart';
-import '../core/extensions/text_style_extension.dart';
 import 'app_text.dart';
 import 'global_button.dart';
 

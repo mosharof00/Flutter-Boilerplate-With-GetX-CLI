@@ -19,3 +19,6 @@ class Log {
     _logger.e(message);
   }
 }
+
+
+// var logger = Logger();

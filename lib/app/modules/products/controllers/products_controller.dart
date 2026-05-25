@@ -34,7 +34,7 @@ import '../../../data/repositories/product_repository.dart';
 // }
 
 class ProductsController extends GetxController {
-  final IProductRepository _repo = Get.find<IProductRepository>();
+  final IProductRepository _productRepo = Get.find<IProductRepository>();
 
   final productList = <Product>[].obs;
 
@@ -60,7 +60,7 @@ class ProductsController extends GetxController {
     }
 
     try {
-      final response = await _repo.getProducts(
+      final response = await _productRepo.getProducts(
         limit: pagination,
         skip: currentPage * pagination,
       );

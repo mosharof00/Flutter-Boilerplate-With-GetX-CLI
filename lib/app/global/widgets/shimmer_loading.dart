@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../core/theme/app_colors.dart';
 
 // ── Base shimmer block ────────────────────────────────────────────────────────
 

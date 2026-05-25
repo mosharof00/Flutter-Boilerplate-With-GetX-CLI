@@ -1,9 +1,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/utils/dialog_utils.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/utils/helper_utils.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/routes/app_pages.dart';
 import 'package:get/get.dart';
-
-import '../core/utils/dialog_utils.dart';
-import '../core/utils/helper_utils.dart';
-import '../routes/app_pages.dart';
 
 
 void showAuthDialog() {

@@ -1,4 +1,4 @@
-import '../core/network/api_endpoints.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/network/api_endpoints.dart';
 
 class GetImageUrl {
   static String url(String? url) {

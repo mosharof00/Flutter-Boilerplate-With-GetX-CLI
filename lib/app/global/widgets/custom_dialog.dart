@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/text_style_extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../core/extensions/text_style_extension.dart';
 import 'app_svg_icon.dart';
 import 'app_text.dart';
 

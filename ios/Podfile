@@ -1,7 +1,5 @@
-# Uncomment this line to define a global platform for your project
-# platform :ios, '13.0'
+platform :ios, '14.0'
 
-# CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
 project 'Runner', {
@@ -27,6 +25,11 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 
 flutter_ios_podfile_setup
 
+# Project root is two levels up from this Podfile (ios/../)
+def project_root
+  File.expand_path('../..', __FILE__)
+end
+
 target 'Runner' do
   use_frameworks!
 
@@ -39,5 +42,37 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+
+    # Fix rive_native setup script running from wrong directory
+    if target.name == 'rive_native'
+      target.build_phases.each do |phase|
+        if phase.respond_to?(:shell_script) && phase.shell_script.include?('rive_native:setup')
+          phase.shell_script = "cd \"#{project_root}\" && #{phase.shell_script}"
+        end
+      end
+    end
+
+    target.build_configurations.each do |config|
+      config.build_settings['SWIFT_VERSION'] = '5.0'
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
+    end
+  end
+
+  # Fix xcconfig base configuration conflict
+  installer.aggregate_targets.each do |aggregate_target|
+    aggregate_target.user_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        pods_xcconfig = "Target Support Files/Pods-Runner/Pods-Runner.#{config.name.downcase}.xcconfig"
+        release_xcconfig_path = File.expand_path('../Flutter/Release.xcconfig', __FILE__)
+
+        if File.exist?(release_xcconfig_path)
+          contents = File.read(release_xcconfig_path)
+          include_line = "#include \"../ios/#{pods_xcconfig}\""
+          unless contents.include?(pods_xcconfig)
+            File.open(release_xcconfig_path, 'a') { |f| f.puts include_line }
+          end
+        end
+      end
+    end
   end
 end

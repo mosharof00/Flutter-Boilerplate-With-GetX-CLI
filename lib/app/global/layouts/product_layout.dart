@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/get_currency_extension.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/sizedbox_extension.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/text_style_extension.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_colors.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/global/widgets/app_text.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/global/widgets/cached_image.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/global/widgets/get_image_url.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/global/widgets/view_rating_stars.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 
-import '../core/extensions/get_currency_extension.dart';
-import '../core/extensions/sizedbox_extension.dart';
-import '../core/extensions/text_style_extension.dart';
-import '../core/theme/app_colors.dart';
-import '../data/models/products_model.dart';
-import '../widgets/app_text.dart';
-import '../widgets/cached_image.dart';
-import '../widgets/get_image_url.dart';
-import '../widgets/view_rating_stars.dart';
-
+import '../../data/models/products_model.dart';
 
 class ProductLayout extends StatelessWidget {
   const ProductLayout({

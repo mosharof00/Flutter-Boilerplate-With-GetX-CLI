@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/global/widgets/custom_svg_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
@@ -6,7 +7,6 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../widgets/custom_svg_image.dart';
 import '../controllers/main_page_controller.dart';
 
 class MainPageView extends GetView<MainPageController> {
@@ -39,7 +39,7 @@ class _BottomNav extends GetView<MainPageController> {
     _NavTab(
       outlineIcon: Assets.icons.profileIcon,
       fillIcon: Assets.icons.profileFillIcon,
-      label: 'Profile',
+      label: 'SimpleProducts',
     ),
   ];
 

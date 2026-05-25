@@ -1,23 +1,35 @@
+import 'package:flutter_boilerplate_with_getx_cli/app/core/network/handle_exceptions.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/data/models/products_model.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/data/repositories/product_repository.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
   //TODO: Implement ProfileController
+  final IProductRepository _productRepo = Get.find<IProductRepository>();
 
-  final count = 0.obs;
+  final productList = <Product>[].obs;
+  final isLoading = false.obs;
+
+  Future<void> fetchData() async {
+    try {
+      isLoading.value = true;
+      final response = await _productRepo.getProducts(limit: 20, skip: 0);
+
+      ///   simple validation according to your API response
+      if (response.products != null) {
+        productList.value = response.products!;
+      }
+    } catch (e) {
+      handleException(e);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   @override
   void onInit() {
+    // TODO: implement onInit
+    fetchData();
     super.onInit();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

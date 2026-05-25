@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/text_style_extension.dart';
 import 'package:get/get.dart';
 
-import '../core/extensions/text_style_extension.dart';
 import 'app_text.dart';
 
 SnackbarController globalSnackBar({

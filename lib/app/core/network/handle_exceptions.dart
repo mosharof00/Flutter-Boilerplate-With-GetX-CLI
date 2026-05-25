@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
-import '../../widgets/global_snackbar.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/global/widgets/global_snackbar.dart';
+
 import '../utils/logger.dart';
 import 'api_exception.dart';
 

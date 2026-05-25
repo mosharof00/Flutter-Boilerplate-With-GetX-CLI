@@ -1,9 +1,9 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/text_style_extension.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../core/extensions/text_style_extension.dart';
-import '../core/theme/app_colors.dart';
 import 'app_text.dart';
 
 class BadgeIcon extends StatelessWidget {
