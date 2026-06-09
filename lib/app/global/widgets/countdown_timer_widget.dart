@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/sizedbox_extension.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/text_style_extension.dart';
-import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_colors.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'app_text.dart';
@@ -93,7 +93,7 @@ class _TimeBox extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
       decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.1),
+        color: AppColor.primary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(4.r),
       ),
       child: Row(
@@ -103,7 +103,7 @@ class _TimeBox extends StatelessWidget {
             value,
             style: context.labelSmall.copyWith(
               fontWeight: FontWeight.bold,
-              color: AppColors.primary,
+              color: AppColor.primary,
             ),
           ),
           2.width,
@@ -133,7 +133,7 @@ class _Separator extends StatelessWidget {
         ':',
         style: context.labelSmall.copyWith(
           fontWeight: FontWeight.bold,
-          color: AppColors.primary,
+          color: AppColor.primary,
         ),
       ),
     );

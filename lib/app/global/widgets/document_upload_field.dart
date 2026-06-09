@@ -7,7 +7,7 @@
 // import 'package:open_filex/open_filex.dart';
 // import 'package:path/path.dart' as p;
 // import '../../../gen/assets.gen.dart';
-// import '../theme/app_colors.dart';
+// import '../theme/app_color.dart';
 // import 'app_text_style.dart';
 // import 'custom_svg_image.dart';
 //

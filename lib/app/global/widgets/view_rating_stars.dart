@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/sizedbox_extension.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/text_style_extension.dart';
-import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_colors.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_color.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -61,7 +61,7 @@ class ViewSingleRatingStar extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(Icons.star, color: AppColors.amber, size: iconSize ?? 14.sp),
+        Icon(Icons.star, color: AppColor.amber, size: iconSize ?? 14.sp),
         2.width,
         AppText(
           rating.toString(),

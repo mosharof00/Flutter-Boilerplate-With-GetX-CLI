@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'app_colors.dart';
+import 'app_color.dart';
 
 class AppTheme {
   AppTheme._();
@@ -10,23 +10,23 @@ class AppTheme {
   static ThemeData light() {
     return ThemeData(
       brightness: Brightness.light,
-      scaffoldBackgroundColor: AppColors.background,
+      scaffoldBackgroundColor: AppColor.background,
       textTheme: _buildTextTheme(Colors.black87),
       colorScheme: ColorScheme.light(
-        primary: AppColors.primary,
-        secondary: AppColors.secondary,
-        error: AppColors.error,
-        surface: AppColors.white,
-        onPrimary: AppColors.white,
-        onSecondary: AppColors.white,
+        primary: AppColor.primary,
+        secondary: AppColor.secondary,
+        error: AppColor.error,
+        surface: AppColor.white,
+        onPrimary: AppColor.white,
+        onSecondary: AppColor.white,
         onSurface: Colors.black87,
-        onError: AppColors.white,
+        onError: AppColor.white,
       ),
       appBarTheme: AppBarTheme(
         titleTextStyle: _font(18.sp, FontWeight.w600, Colors.black87),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColor.background,
         foregroundColor: Colors.black87,
       ),
     );
@@ -35,24 +35,24 @@ class AppTheme {
   static ThemeData dark() {
     return ThemeData(
       brightness: Brightness.dark,
-      scaffoldBackgroundColor: AppColors.darkBackground,
-      textTheme: _buildTextTheme(AppColors.white),
+      scaffoldBackgroundColor: AppColor.darkBackground,
+      textTheme: _buildTextTheme(AppColor.white),
       colorScheme: ColorScheme.dark(
-        primary: AppColors.primary,
-        secondary: AppColors.secondary,
-        error: AppColors.error,
-        surface: AppColors.darkSurface,
-        onPrimary: AppColors.white,
-        onSecondary: AppColors.white,
-        onSurface: AppColors.white,
-        onError: AppColors.white,
+        primary: AppColor.primary,
+        secondary: AppColor.secondary,
+        error: AppColor.error,
+        surface: AppColor.darkSurface,
+        onPrimary: AppColor.white,
+        onSecondary: AppColor.white,
+        onSurface: AppColor.white,
+        onError: AppColor.white,
       ),
       appBarTheme: AppBarTheme(
-        titleTextStyle: _font(18.sp, FontWeight.w600, AppColors.white),
+        titleTextStyle: _font(18.sp, FontWeight.w600, AppColor.white),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: AppColors.darkBackground2,
-        foregroundColor: AppColors.white,
+        backgroundColor: AppColor.darkBackground2,
+        foregroundColor: AppColor.white,
       ),
     );
   }

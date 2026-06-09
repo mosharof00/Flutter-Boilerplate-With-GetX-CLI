@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_colors.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shimmer/shimmer.dart';
@@ -24,7 +24,7 @@ class ShimmerBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: AppColors.primary.withAlpha(20),
+      baseColor: AppColor.primary.withAlpha(20),
       highlightColor: Theme.of(context).brightness == Brightness.dark
           ? Colors.white12
           : Colors.white70,

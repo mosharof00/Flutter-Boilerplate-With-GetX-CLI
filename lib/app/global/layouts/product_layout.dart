@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/get_currency_extension.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/sizedbox_extension.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/text_style_extension.dart';
-import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_colors.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_color.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/global/widgets/app_text.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/global/widgets/cached_image.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/global/widgets/get_image_url.dart';
@@ -80,7 +80,7 @@ class ProductLayout extends StatelessWidget {
                         child: Container(
                           padding: EdgeInsets.symmetric(horizontal: 5.w),
                           decoration: BoxDecoration(
-                            color: AppColors.primary,
+                            color: AppColor.primary,
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(5.r),
                               bottomRight: Radius.circular(5.r),
@@ -151,7 +151,7 @@ class ProductLayout extends StatelessWidget {
                       AppText(
                         finalPrice.getCurrency(),
                         style: context.titleMedium.copyWith(
-                          color: AppColors.primary,
+                          color: AppColor.primary,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -162,7 +162,7 @@ class ProductLayout extends StatelessWidget {
                         AppText(
                           price.getCurrency(),
                           style: context.labelSmall.copyWith(
-                            color: AppColors.grey410,
+                            color: AppColor.grey410,
                             decoration: TextDecoration.lineThrough,
                           ),
                         ),

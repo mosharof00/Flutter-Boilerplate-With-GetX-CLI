@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/text_style_extension.dart';
-import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_colors.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -19,7 +19,7 @@ InputDecoration _buildInputDecoration({
     suffixIcon: suffixIcon,
     suffixStyle: Theme.of(
       context,
-    ).textTheme.bodyMedium?.copyWith(color: AppColors.hintText),
+    ).textTheme.bodyMedium?.copyWith(color: AppColor.hintText),
     hintText: hintText?.tr ?? '',
     filled: true,
     fillColor: Colors.white,
@@ -32,11 +32,11 @@ InputDecoration _buildInputDecoration({
     ),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
-      borderSide: const BorderSide(color: AppColors.hintText, width: 0.5),
+      borderSide: const BorderSide(color: AppColor.hintText, width: 0.5),
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
-      borderSide: const BorderSide(color: AppColors.primary, width: 0.8),
+      borderSide: const BorderSide(color: AppColor.primary, width: 0.8),
     ),
   );
 }
@@ -100,7 +100,7 @@ class InputFieldWithLabel extends StatelessWidget {
           readOnly: readOnly,
           onTap: onTap,
           controller: controller,
-          cursorColor: AppColors.primary,
+          cursorColor: AppColor.primary,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           keyboardType: keyboardType ?? TextInputType.text,
           maxLines: maxLines,
@@ -167,7 +167,7 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
         ),
         TextFormField(
           controller: widget.controller,
-          cursorColor: AppColors.primary,
+          cursorColor: AppColor.primary,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           keyboardType: TextInputType.visiblePassword,
           obscureText: _obscure,
@@ -184,7 +184,7 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
                 _obscure
                     ? Icons.visibility_off_outlined
                     : Icons.visibility_outlined,
-                color: AppColors.hintText,
+                color: AppColor.hintText,
                 size: 20.sp,
               ),
             ),

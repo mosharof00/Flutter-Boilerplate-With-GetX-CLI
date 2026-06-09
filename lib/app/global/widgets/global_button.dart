@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/text_style_extension.dart';
-import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_colors.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'app_text.dart';
@@ -23,6 +23,7 @@ class GlobalButton extends StatelessWidget {
     this.prefixWidget,
     this.padding,
     this.isDisabled = false,
+    this.widget,
   });
 
   final VoidCallback onTap;
@@ -37,12 +38,13 @@ class GlobalButton extends StatelessWidget {
   final List<BoxShadow>? boxShadow;
   final Widget? suffixWidget;
   final Widget? prefixWidget;
+  final Widget? widget;
   final EdgeInsetsGeometry? padding;
   final bool isDisabled;
 
   Color _resolveColor() {
-    if (isDisabled) return AppColors.primaryDisable;
-    return color ?? AppColors.primary;
+    if (isDisabled) return AppColor.primaryDisable;
+    return color ?? AppColor.primary;
   }
 
   @override
@@ -60,23 +62,25 @@ class GlobalButton extends StatelessWidget {
           border: Border.all(color: borderColor ?? Colors.transparent),
           boxShadow: isDisabled ? null : boxShadow,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ?prefixWidget,
-            Expanded(
-              child: AppText(
-                text,
-                style: context.titleSmall.copyWith(
-                  color: textColor ?? Colors.white,
+        child:
+            widget ??
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ?prefixWidget,
+                Expanded(
+                  child: AppText(
+                    text,
+                    style: context.titleSmall.copyWith(
+                      color: textColor ?? Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-                textAlign: TextAlign.center,
-              ),
+                ?suffixWidget,
+              ],
             ),
-            ?suffixWidget,
-          ],
-        ),
       ),
     );
   }

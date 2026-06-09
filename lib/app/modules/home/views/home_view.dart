@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/config/app_config.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/sizedbox_extension.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/text_style_extension.dart';
-import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_colors.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_color.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/global/widgets/app_text.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/global/widgets/appbar_title.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,7 +25,7 @@ class HomeView extends GetView<HomeController> {
           20.height,
           AppText(
             "Welcome to Flutter Boilerplate with GetX CLI\n by Mosharof Khan",
-            style: context.titleMedium.copyWith(fontSize: 25.sp,color: AppColors.primary),
+            style: context.titleMedium.copyWith(fontSize: 25.sp,color: AppColor.primary),
             textAlign: TextAlign.center,
 
           ),

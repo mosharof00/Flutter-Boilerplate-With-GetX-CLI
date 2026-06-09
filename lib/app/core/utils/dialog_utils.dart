@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../theme/app_colors.dart';
+import '../theme/app_color.dart';
 
 
 class DialogUtils {
@@ -47,7 +47,7 @@ class DialogUtils {
       btnOkText: okText ?? "OK",
       btnOkOnPress: okOnPress,
       btnCancelOnPress: cancelOnPress,
-      btnOkColor: AppColors.primary,
+      btnOkColor: AppColor.primary,
       btnCancelColor: Colors.grey,
       btnCancelText: cancelText ?? "Cancel",
     ).show();

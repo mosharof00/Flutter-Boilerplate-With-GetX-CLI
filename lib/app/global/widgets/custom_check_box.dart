@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_colors.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_color.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomCheckBox extends StatelessWidget {
@@ -25,9 +25,9 @@ class CustomCheckBox extends StatelessWidget {
         height: size ?? 15.h,
         width: size ?? 15.w,
         decoration: BoxDecoration(
-          color: isChecked ? AppColors.primary : Colors.white,
+          color: isChecked ? AppColor.primary : Colors.white,
           borderRadius: BorderRadius.circular(3.r),
-          border: Border.all(width: 1.w, color: AppColors.primary),
+          border: Border.all(width: 1.w, color: AppColor.primary),
         ),
         child: isChecked
             ? Center(
