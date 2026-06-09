@@ -26,6 +26,7 @@ class GlobalButton extends StatelessWidget {
     this.padding,
     this.isDisabled = false,
     this.widget,
+    this.textStyle,
   });
 
   final VoidCallback onTap;
@@ -45,6 +46,7 @@ class GlobalButton extends StatelessWidget {
   final Widget? widget;
   final EdgeInsetsGeometry? padding;
   final bool isDisabled;
+  final TextStyle? textStyle;
 
   Color _resolveColor() {
     if (isDisabled) return AppColor.primaryDisable;
@@ -67,7 +69,7 @@ class GlobalButton extends StatelessWidget {
           boxShadow: isDisabled ? null : boxShadow,
         ),
         child:
-        widget ??
+            widget ??
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -76,11 +78,13 @@ class GlobalButton extends StatelessWidget {
                 Expanded(
                   child: AppText(
                     text,
-                    style: context.titleSmall.copyWith(
-                      color: textColor ?? Colors.white,
-                      fontSize: fontSize,
-                      fontWeight: fontWeight,
-                    ),
+                    style:
+                        textStyle ??
+                        context.titleSmall.copyWith(
+                          color: textColor ?? Colors.white,
+                          fontSize: fontSize,
+                          fontWeight: fontWeight,
+                        ),
                     textAlign: TextAlign.center,
                   ),
                 ),
