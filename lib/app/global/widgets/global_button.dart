@@ -16,6 +16,8 @@ class GlobalButton extends StatelessWidget {
     this.textColor,
     this.height,
     this.width,
+    this.fontSize,
+    this.fontWeight,
     this.borderRadius,
     this.gradient,
     this.boxShadow,
@@ -33,6 +35,8 @@ class GlobalButton extends StatelessWidget {
   final Color? textColor;
   final double? height;
   final double? width;
+  final double? fontSize;
+  final FontWeight? fontWeight;
   final BorderRadius? borderRadius;
   final LinearGradient? gradient;
   final List<BoxShadow>? boxShadow;
@@ -63,7 +67,7 @@ class GlobalButton extends StatelessWidget {
           boxShadow: isDisabled ? null : boxShadow,
         ),
         child:
-            widget ??
+        widget ??
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -74,6 +78,8 @@ class GlobalButton extends StatelessWidget {
                     text,
                     style: context.titleSmall.copyWith(
                       color: textColor ?? Colors.white,
+                      fontSize: fontSize,
+                      fontWeight: fontWeight,
                     ),
                     textAlign: TextAlign.center,
                   ),
