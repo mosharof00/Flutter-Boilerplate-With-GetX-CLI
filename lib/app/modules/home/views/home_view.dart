@@ -5,6 +5,8 @@ import 'package:flutter_boilerplate_with_getx_cli/app/core/extensions/text_style
 import 'package:flutter_boilerplate_with_getx_cli/app/core/theme/app_color.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/global/widgets/app_text.dart';
 import 'package:flutter_boilerplate_with_getx_cli/app/global/widgets/appbar_title.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/global/widgets/cached_image.dart';
+import 'package:flutter_boilerplate_with_getx_cli/app/global/widgets/shimmer_loading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
@@ -16,10 +18,26 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: AppBarTitle("Home"), centerTitle: true),
+      appBar: AppBar(
+        title: AppBarTitle("Home"),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: controller.onAuthAction,
+            icon: Icon(
+              controller.isLoggedIn ? Icons.logout : Icons.login,
+              color: AppColor.primary,
+            ),
+          ),
+        ],
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          if (controller.isLoggedIn) ...[
+            const _UserHeader(),
+            24.height,
+          ],
           Center(child: Image.asset(AppConfig.appLogo, width: 200.w,)),
 
           20.height,
@@ -32,5 +50,34 @@ class HomeView extends GetView<HomeController> {
         ],
       ),
     );
+  }
+}
+
+class _UserHeader extends GetView<HomeController> {
+  const _UserHeader();
+
+  @override
+  Widget build(BuildContext context) {
+    final size = 64.r;
+    return Obx(() {
+      final name = controller.user.value?.name;
+      return Column(
+        children: [
+          controller.isUserLoading.value && controller.user.value == null
+              ? ShimmerBox(width: size, height: size, borderRadius: size / 2)
+              : ClipOval(
+                  child: CachedImage(
+                    imgUrl: controller.avatarUrl,
+                    width: size,
+                    height: size,
+                  ),
+                ),
+          if (name != null && name.isNotEmpty) ...[
+            8.height,
+            AppText('Hi, $name', style: context.titleMedium),
+          ],
+        ],
+      );
+    });
   }
 }

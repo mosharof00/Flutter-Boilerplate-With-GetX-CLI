@@ -19,7 +19,7 @@ class CustomCheckBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
-      minSize: 25.sp,
+      minimumSize: Size(25.sp, 25.sp),
       onPressed: onTap,
       child: Container(
         height: size ?? 15.h,

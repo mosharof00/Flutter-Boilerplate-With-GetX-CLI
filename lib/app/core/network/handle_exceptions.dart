@@ -8,8 +8,9 @@ import 'api_exception.dart';
 
 void handleException(dynamic error, {String? context}) {
   if (error is ApiException) {
-    // 401 is already handled by AuthInterceptor — skip silently
-    if (error.statusCode == 401) {
+    // Session-expiry 401s are handled by AuthInterceptor — skip silently.
+    // Auth-endpoint 401s (wrong credentials) fall through to show the message.
+    if (error.statusCode == 401 && !error.isAuthRequest) {
       Log.w(
         '[${context ?? 'API'}] 401 caught in handleException — handled by interceptor',
       );
@@ -17,6 +18,7 @@ void handleException(dynamic error, {String? context}) {
     }
 
     final message = switch (error.statusCode) {
+      401 => error.message.isNotEmpty ? error.message : "Unauthorized.",
       404 => "Requested resource not found.",
       500 => "Something went wrong! Please try again later.",
       400 => error.message.isNotEmpty ? error.message : "Bad request.",

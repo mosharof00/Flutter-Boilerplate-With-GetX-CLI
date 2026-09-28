@@ -34,12 +34,20 @@ class CachedImage extends StatelessWidget {
     );
   }
 
+  /// Some CDNs (e.g. Unsplash) reject requests with no User-Agent → 403.
+  static const _httpHeaders = {
+    'User-Agent':
+        'Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 '
+        '(KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36',
+  };
+
   Widget _svgImage() {
     return SvgPicture.network(
       imgUrl,
       height: height,
       width: width,
       fit: fit ?? BoxFit.contain,
+      headers: _httpHeaders,
       placeholderBuilder: (_) =>
           ShimmerBox(height: height, width: width, borderRadius: borderRadius),
     );
@@ -48,6 +56,7 @@ class CachedImage extends StatelessWidget {
   Widget _cachedImage() {
     return CachedNetworkImage(
       imageUrl: imgUrl,
+      httpHeaders: _httpHeaders,
       width: width,
       height: height,
       fit: fit ?? BoxFit.cover,

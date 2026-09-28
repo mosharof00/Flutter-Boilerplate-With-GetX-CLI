@@ -1,49 +1,39 @@
-// To parse this JSON data, do
-//
-//     final loginModel = loginModelFromJson(jsonString);
-
-import 'dart:convert';
-
-LoginModel loginModelFromJson(String str) =>
-    LoginModel.fromJson(json.decode(str));
-
-String loginModelToJson(LoginModel data) => json.encode(data.toJson());
-
 class LoginModel {
-  Authorization? authorization;
-  String? type;
+  LoginModel({this.success, this.message, this.data});
 
-  LoginModel({this.authorization, this.type});
+  final bool? success;
+  final String? message;
+  final LoginData? data;
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-    authorization: json["authorization"] == null
-        ? null
-        : Authorization.fromJson(json["authorization"]),
-    type: json["type"],
+    success: json['success'],
+    message: json['message'],
+    data: json['data'] == null ? null : LoginData.fromJson(json['data']),
   );
 
   Map<String, dynamic> toJson() => {
-    "authorization": authorization?.toJson(),
-    "type": type,
+    'success': success,
+    'message': message,
+    'data': data?.toJson(),
   };
 }
 
-class Authorization {
-  String? type;
-  String? accessToken;
-  String? refreshToken;
+class LoginData {
+  LoginData({this.userId, this.type, this.accessToken});
 
-  Authorization({this.type, this.accessToken, this.refreshToken});
+  final String? userId;
+  final String? type;
+  final String? accessToken;
 
-  factory Authorization.fromJson(Map<String, dynamic> json) => Authorization(
-    type: json["type"],
-    accessToken: json["access_token"],
-    refreshToken: json["refresh_token"],
+  factory LoginData.fromJson(Map<String, dynamic> json) => LoginData(
+    userId: json['userId'],
+    type: json['type'],
+    accessToken: json['accessToken'],
   );
 
   Map<String, dynamic> toJson() => {
-    "type": type,
-    "access_token": accessToken,
-    "refresh_token": refreshToken,
+    'userId': userId,
+    'type': type,
+    'accessToken': accessToken,
   };
 }

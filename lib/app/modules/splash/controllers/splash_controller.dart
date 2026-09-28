@@ -1,28 +1,22 @@
 import 'package:get/get.dart';
 
+import '../../../core/config/app_config.dart';
 import '../../../core/utils/helper_utils.dart';
 import '../../../routes/app_pages.dart';
 
 class SplashController extends GetxController {
-  //TODO: Implement SplashController
-
   Future<void> setupApp() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
 
     navigateToScreen();
   }
 
   Future<void> navigateToScreen() async {
-    bool isLoggedIn = await HelperUtils.checkLoginStatus().timeout(
-      const Duration(seconds: 5),
-    );
+    final isLoggedIn = await HelperUtils.checkLoginStatus()
+        .timeout(const Duration(seconds: 5), onTimeout: () => false);
 
-    if (isLoggedIn) {
-      await HelperUtils.initMainControllers();
-      Get.offAllNamed(Routes.MAIN_PAGE);
-    } else {
-      Get.offAllNamed(Routes.MAIN_PAGE);
-    }
+    final goToLogin = !isLoggedIn && AppConfig.requireLogin;
+    Get.offAllNamed(goToLogin ? Routes.LOGIN : Routes.MAIN_PAGE);
   }
 
   @override

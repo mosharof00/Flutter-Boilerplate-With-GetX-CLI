@@ -14,10 +14,17 @@ class MainPageView extends GetView<MainPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.background,
-      body: Obx(() => controller.pages[controller.selectedIndex.value]),
-      bottomNavigationBar: const _BottomNav(),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) controller.onBackPressed();
+      },
+      child: Scaffold(
+        key: controller.scaffoldKey,
+        backgroundColor: AppColor.background,
+        body: Obx(() => controller.pages[controller.selectedIndex.value]),
+        bottomNavigationBar: const _BottomNav(),
+      ),
     );
   }
 }

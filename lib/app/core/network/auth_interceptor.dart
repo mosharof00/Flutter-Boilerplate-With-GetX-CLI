@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_boilerplate_with_getx_cli/app/global/widgets/global_snackbar.dart';
-import 'package:get/get.dart' hide Response;
-import '../../routes/app_pages.dart';
 import '../utils/helper_utils.dart';
+import 'api_endpoints.dart';
 
 class AuthInterceptor extends Interceptor {
   final Dio dio;
@@ -25,7 +23,7 @@ class AuthInterceptor extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     // Check if the response indicates the user is unauthenticated even with a 200 status
     if (response.data is Map && response.data['message'] == "Unauthenticated.") {
-      _handleUnauthorized();
+      HelperUtils.handleSessionExpired();
     }
     handler.next(response);
   }
@@ -33,27 +31,14 @@ class AuthInterceptor extends Interceptor {
   @override
   Future<void> onError(
       DioException err, ErrorInterceptorHandler handler) async {
-    if (err.response?.statusCode == 401) {
-      _handleUnauthorized();
+    if (err.response?.statusCode == 401 &&
+        !ApiEndpoint.isAuthPath(err.requestOptions.uri.toString())) {
+      final data = err.response?.data;
+      HelperUtils.handleSessionExpired(
+        data is Map ? data['message']?.toString() : null,
+      );
     }
 
     handler.next(err);
-  }
-
-  void _handleUnauthorized() async {
-    // Only trigger if we are currently considered "logged in" to avoid infinite loops or redundant logic
-    if (HelperUtils.isLogin) {
-      await HelperUtils.clearUser();
-      HelperUtils.deleteMainControllers();
-
-      // Show notification to user
-      globalSnackBar(
-        title: "Session Expired",
-        message: "Your session has expired. Please login again.",
-      );
-
-      // Redirect to login
-      Get.offAllNamed(Routes.LOGIN);
-    }
   }
 }
